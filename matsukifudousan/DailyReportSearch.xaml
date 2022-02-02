@@ -1,0 +1,192 @@
+﻿<UserControl x:Class="matsukifudousan.DailyReportSearch"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:matsukifudousan"
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             
+             DataContext="{StaticResource DailyReportSearchVM}"
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="835">
+    <UserControl.Resources>
+
+        <Style TargetType="Border" x:Key="BorderGrid">
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="BorderBrush" Value="Gray"></Setter>
+            <Setter Property="Margin" Value="0,3,0,0"></Setter>
+        </Style>
+
+        <Style TargetType="DatePicker" x:Key="DatePickerMF">
+            <Setter Property="Margin" Value="9 3 0 0"/>
+            <Setter Property="FontSize" Value="19"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+    
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="15,15,0,0">
+            <TextBlock Text="日報検索" FontSize="30"></TextBlock>
+        </Grid>
+        <Grid Grid.Row="1" Margin="15,15,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Style="{StaticResource ResourceKey=BorderGrid}" Width="auto">
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="12*"></ColumnDefinition>
+                        <ColumnDefinition Width="12*"></ColumnDefinition>
+                        <ColumnDefinition Width="12*"></ColumnDefinition>
+                        <ColumnDefinition Width="12*"></ColumnDefinition>
+                        <!--<ColumnDefinition Width="12*"></ColumnDefinition>-->
+                    </Grid.ColumnDefinitions>
+                    <!--<DatePicker Grid.Column="0" SelectedDate="{Binding Search,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ResourceKey=DatePickerMF}"></DatePicker>-->
+                    <ComboBox Grid.Column="0" x:Name="cbxType" ItemsSource="{Binding TypeCombox,Mode=TwoWay}" SelectedItem="{Binding TypeSelected,Mode=TwoWay}" Style="{StaticResource ResourceKey=MaterialDesignComboBox}" FontSize="19" Margin="9 0 0 0" Height="36">
+                        <!--<ComboBoxItem>物件賃貸契約書</ComboBoxItem>-->
+                    </ComboBox>
+                    <Button Grid.Column="1" Command="{Binding DailyReportSearchClean}" Content="クリア" Background="#000"></Button>
+                    <Button Grid.Column="2" x:Name="fixButton" Command="{Binding DailyReportFix}" Content="修正" Margin="0 0 2 0" Background="#CA5100"></Button>
+                    <Button Grid.Column="3" Command="{Binding DailyReportDelete}" Content="削除" Margin="0 0 2 0" Background="#E51400"></Button>
+                    <Button Grid.Column="4" Command="{Binding DailyReportDetailsView}" Content="詳細" Background="#8CD25F"></Button>
+                    <!--<Button Grid.Column="5" Command="{Binding DailyReportAllSearch}" Content="全部検索" Background="#000"></Button>-->
+                </Grid>
+            </Border>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60*"/>
+                    <!--<ColumnDefinition Width="10*"/>-->
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="txbCommentSearch" Grid.Column="0" Text="{Binding CommentSearch, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5" materialDesign:HintAssist.Hint="コメント検索" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                <!--<Button Grid.Column="1" Command="{Binding DailyReportCommmentSearch}" Content="検索" Background="#000"></Button>-->
+                <TextBox x:Name="txbDate" Grid.Column="1" Text="{Binding Date, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5" materialDesign:HintAssist.Hint="日付" Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsReadOnly="True"/>
+                <TextBox x:Name="txbDailyReportId" Grid.Column="2" Text="{Binding DailyReportId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5" materialDesign:HintAssist.Hint="日報No" Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsReadOnly="True"/>
+            </Grid>
+
+            <materialDesign:Card Grid.Row="2" Margin="5" VerticalAlignment="Stretch">
+                <DataGrid Name="dataGrid" ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}" AutoGenerateColumns="False" CanUserAddRows="False" Height="450">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="日付" 
+                        Binding="{Binding Date}" 
+                        FontSize="18" 
+                        IsReadOnly="True">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness"
+                                Value="1,0,0,1" />
+                                    <Setter Property="BorderBrush"
+                                Value="Black" />
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="物件No"
+                        FontSize="18"
+                        IsReadOnly="True"
+                        Binding="{Binding HouseNo}">
+
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness"
+                                Value="1,0,0,1" />
+                                    <Setter Property="BorderBrush"
+                                Value="Black" />
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="得意先No"
+                        IsReadOnly="True"
+                        FontSize="18"
+                        Binding="{Binding CustomerNo}">
+
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness"
+                                Value="1,0,0,1" />
+                                    <Setter Property="BorderBrush"
+                                Value="Black" />
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="お客様名"
+                        IsReadOnly="True"
+                        FontSize="18"
+                        Binding="{Binding CustomerNameOther}">
+
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness"
+                                Value="1,0,0,1" />
+                                    <Setter Property="BorderBrush"
+                                Value="Black" />
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="種類"
+                        IsReadOnly="True"
+                        FontSize="18"
+                        Binding="{Binding TypeSelect}">
+
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness"
+                                Value="1,0,1,1" />
+                                    <Setter Property="BorderBrush"
+                                Value="Black" />
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="コメント"
+                        IsReadOnly="True"
+                        FontSize="18"
+                        Binding="{Binding Comment}">
+
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness"
+                                Value="1,0,1,1" />
+                                    <Setter Property="BorderBrush"
+                                Value="Black" />
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Height="350">
+                        <ListView x:Name="RentalList" ItemsSource="{Binding List, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="物件番号" DisplayMemberBinding="{Binding HouseNo}"></GridViewColumn>
+                                    <GridViewColumn Header="物件名" DisplayMemberBinding="{Binding HouseName}"></GridViewColumn>
+                                    <GridViewColumn Header="住所地" DisplayMemberBinding="{Binding HouseAddress}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                </ScrollViewer>-->
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</UserControl>

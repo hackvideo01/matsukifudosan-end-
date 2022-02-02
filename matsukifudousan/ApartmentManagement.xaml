@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="matsukifudousan.ApartmentManagement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:matsukifudousan"
+             xmlns:uc="clr-namespace:matsukifudousan.UserControlNL"
+             
+             mc:Ignorable="d" 
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             
+             d:DesignHeight="650" d:DesignWidth="1100"
+             Tag="マンション管理"
+             Name="ApartmentMN">
+    <UserControl.Resources>
+
+        <Style x:Key="wdButton" TargetType="Button">
+            <Setter Property="FontWeight" Value="Normal"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+            <Setter Property="Height" Value="45"></Setter>
+            <Setter Property="Width" Value="135"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Padding" Value="9 0 0 0"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#1294F4"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ListViewItemStyle1" TargetType="{x:Type ListViewItem}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" Value="LightGreen" />
+                    <Setter Property="Foreground" Value="Blue" />
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="true">
+                    <Setter Property="Background" Value="LightCoral" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <uc:UserControlUC Tag="{Binding Tag, ElementName=ApartmentMN}"></uc:UserControlUC>
+        </Grid>
+
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="165"></ColumnDefinition>
+                <ColumnDefinition Width="935"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListView_SelectionChanged" SelectedItem="{}">
+
+                    <ListViewItem x:Name="Menu" Style="{StaticResource ResourceKey=ListViewItemStyle1}" Margin="0,15,0,0">
+                        <StackPanel Background="#1294F4" Orientation="Horizontal" Margin="10 0" Width="135">
+                            <TextBlock Text="メニューへ" Margin="10" Foreground="White" FontSize="20"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem x:Name="ApartmentInput" Style="{StaticResource ResourceKey=ListViewItemStyle1}">
+                        <StackPanel x:Name="RentalInputBGChange" Background="#1294F4" Orientation="Horizontal" Margin="10 0" Width="135">
+                            <TextBlock Text="マンション入力" Margin="10" Foreground="White" FontSize="20"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem x:Name="ApartmentSearch" Style="{StaticResource ResourceKey=ListViewItemStyle1}">
+                        <StackPanel x:Name="RentalSearchBGChange" Background="#1294F4" Orientation="Horizontal" Margin="10 0" Width="135">
+                            <TextBlock Text="マンション検索" Margin="10" Foreground="White" FontSize="20"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <!--<ListViewItem x:Name="DepositBusiness" Style="{StaticResource ResourceKey=ListViewItemStyle1}">
+                        <StackPanel x:Name="DepositBusinessBGChange" Background="#1294F4" Orientation="Horizontal" Margin="10 0" Width="135">
+                            <TextBlock Text="入金管理" Margin="10" Foreground="White" FontSize="20"/>
+                        </StackPanel>
+                    </ListViewItem>-->
+                    <ListViewItem x:Name="Prints" Style="{StaticResource ResourceKey=ListViewItemStyle1}">
+                        <StackPanel x:Name="PrintsSearchBGChange" Background="#1294F4" Orientation="Horizontal" Margin="10 0" Width="135">
+                            <TextBlock Text="各種印刷" Margin="10" Foreground="White" FontSize="20"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <!--<ListViewItem x:Name="wd" Style="{StaticResource ResourceKey=ListViewItemStyle1}">
+                        <StackPanel Background="#1294F4" Orientation="Horizontal" Margin="10 0" Width="135">
+                            <Button Command="{Binding ContractDetailsCommandWD}" Content="詳細入力" Style="{StaticResource ResourceKey=wdButton}"></Button>
+                        </StackPanel>
+                    </ListViewItem>-->
+                </ListView>
+
+                <!--<Button Command="{Binding ContractDetailsCommandWD}" Content="詳細入力" Style="{StaticResource ResourceKey=wdButton}"></Button>-->
+
+            </StackPanel>
+
+            <Grid x:Name="ApartmentContain"  Grid.Column="1">
+
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>

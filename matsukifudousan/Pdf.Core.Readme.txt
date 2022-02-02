@@ -1,0 +1,4 @@
+The PDF.Core Nuget package is obsolete as of 10 Jan 2020.
+This will now redirect to the IronPdf Nuget Package which supports framework, core and standard all from a single package.
+
+https://ironpdf.com

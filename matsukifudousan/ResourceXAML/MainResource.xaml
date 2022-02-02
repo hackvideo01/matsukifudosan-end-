@@ -1,0 +1,95 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodel="clr-namespace:matsukifudousan.ViewModel"
+                    xmlns:local="clr-namespace:matsukifudousan.ResourceXAML">
+
+
+    <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
+
+    <viewmodel:RentalInputViewModel x:Key="RentalInputVM"></viewmodel:RentalInputViewModel>
+
+    <viewmodel:RentalSearchViewModel x:Key="RentalSearchVM"></viewmodel:RentalSearchViewModel>
+
+    <viewmodel:RentalDetailsViewViewModel x:Key="RentalDetailsViewVM"></viewmodel:RentalDetailsViewViewModel>
+
+    <viewmodel:RentalPrintsViewModel x:Key="PrintsVM"></viewmodel:RentalPrintsViewModel>
+
+    <viewmodel:RentalFixViewModel x:Key="RentalFixVM"></viewmodel:RentalFixViewModel>
+
+    <viewmodel:DetachedInputViewModel x:Key="DetachedInputVM"></viewmodel:DetachedInputViewModel>
+
+    <viewmodel:DetachedSearchViewModel x:Key="DetachedSearchVM"></viewmodel:DetachedSearchViewModel>
+
+    <viewmodel:DetachedDetailsViewViewModel x:Key="DetachedDetailsViewVM"></viewmodel:DetachedDetailsViewViewModel>
+
+    <viewmodel:DetachedFixsViewModel x:Key="DetachedFixsVM"></viewmodel:DetachedFixsViewModel>
+
+    <viewmodel:ApartmentInputViewModel x:Key="ApartmentInputVM"></viewmodel:ApartmentInputViewModel>
+
+    <viewmodel:ApartmentFixsViewModel x:Key="ApartmentFixVM"></viewmodel:ApartmentFixsViewModel>
+
+    <viewmodel:ApartmentSearchViewModel x:Key="ApartmentSearchVM"></viewmodel:ApartmentSearchViewModel>
+
+    <viewmodel:ApartmentDetailsViewViewModel x:Key="ApartmentDetailsViewVM"></viewmodel:ApartmentDetailsViewViewModel>
+
+    <viewmodel:LandInputViewModel x:Key="LandInputVM"></viewmodel:LandInputViewModel>
+
+    <viewmodel:LandDetailsViewModel x:Key="LandDetailsVM"></viewmodel:LandDetailsViewModel>
+
+    <viewmodel:LandFixViewModel x:Key="LandFixsVM"></viewmodel:LandFixViewModel>
+
+    <viewmodel:LandSearchViewModel x:Key="LandSearchVM"></viewmodel:LandSearchViewModel>
+
+    <viewmodel:ImageSearchViewModel x:Key="ImageSearchVM"></viewmodel:ImageSearchViewModel>
+
+    <viewmodel:ContractDetailsViewModel x:Key="ContractDetailsVM"></viewmodel:ContractDetailsViewModel>
+
+    <viewmodel:ContractDetailsSearchViewModel x:Key="ContractDetailsSearchVM"></viewmodel:ContractDetailsSearchViewModel>
+
+    <viewmodel:ContractDetailsViewViewModel x:Key="ContractDetailsViewVM"></viewmodel:ContractDetailsViewViewModel>
+
+    <viewmodel:ContractDetailsFixViewModel x:Key="ContractDetailsFixVM"></viewmodel:ContractDetailsFixViewModel>
+
+    <viewmodel:RentalContractInputViewModel x:Key="RentalContractInputVM"></viewmodel:RentalContractInputViewModel>
+
+    <viewmodel:RentalContractPaymentSearchViewModel x:Key="RentalContractPaymentSearchVM"></viewmodel:RentalContractPaymentSearchViewModel>
+
+    <viewmodel:RentalPaymentViewModel x:Key="RentalPaymentVM"></viewmodel:RentalPaymentViewModel>
+
+    <viewmodel:RentalContractSearchViewModel x:Key="RentalContractSearchVM"></viewmodel:RentalContractSearchViewModel>
+
+    <viewmodel:RentalContractFixViewModel x:Key="RentalContractFixVM"></viewmodel:RentalContractFixViewModel>
+
+    <viewmodel:ApartmentPrintsViewModel x:Key="ApartmentPrintsVM"></viewmodel:ApartmentPrintsViewModel>
+
+    <viewmodel:DetachedPrintsViewModel x:Key="DetachedPrintsVM"></viewmodel:DetachedPrintsViewModel>
+
+    <viewmodel:LandPrintsViewModel x:Key="LandPrintsVM"></viewmodel:LandPrintsViewModel>
+
+    <viewmodel:CustomerInputViewModel x:Key="CustomerInputVM"></viewmodel:CustomerInputViewModel>
+
+    <viewmodel:CustomerSearchViewModel x:Key="CustomerSearchVM"></viewmodel:CustomerSearchViewModel>
+
+    <viewmodel:CustomerFixsViewModel x:Key="CustomerFixsVM"></viewmodel:CustomerFixsViewModel>
+
+    <viewmodel:CustomerDetailViewViewModel x:Key="CustomerDetailViewVM"></viewmodel:CustomerDetailViewViewModel>
+
+    <viewmodel:CustomerPrintsViewModel x:Key="CustomerPrintsVM"></viewmodel:CustomerPrintsViewModel>
+
+    <viewmodel:DailyReportInputViewModel x:Key="DailyReportInputVM"></viewmodel:DailyReportInputViewModel>
+
+    <viewmodel:DailyReportSearchViewModel x:Key="DailyReportSearchVM"></viewmodel:DailyReportSearchViewModel>
+
+    <viewmodel:DailyReportFixsViewModel x:Key="DailyReportFixsVM"></viewmodel:DailyReportFixsViewModel>
+
+    <viewmodel:DailyReportViewViewModel x:Key="DailyReportViewVM"></viewmodel:DailyReportViewViewModel>
+
+    <viewmodel:ConstructionInputViewModel x:Key="ConstructionInputVM"></viewmodel:ConstructionInputViewModel>
+
+    <viewmodel:ConstructionFixsViewModel x:Key="ConstructionFixsVM"></viewmodel:ConstructionFixsViewModel>
+
+    <viewmodel:ConstructionSearchViewModel x:Key="ConstructionSearchVM"></viewmodel:ConstructionSearchViewModel>
+
+    <viewmodel:ConstructionDetailsViewViewModel x:Key="ConstructionDetailsViewVM"></viewmodel:ConstructionDetailsViewViewModel>
+
+</ResourceDictionary>

@@ -1,0 +1,125 @@
+﻿<UserControl x:Class="matsukifudousan.ImageSearch"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:matsukifudousan"
+             xmlns:uc="clr-namespace:matsukifudousan.UserControlNL"
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             
+             DataContext="{StaticResource ImageSearchVM}"
+             Name="ImageSearchUC"
+             Tag="画像検索"
+
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="835">
+    <UserControl.Resources>
+
+        <Style TargetType="Border" x:Key="BorderGrid">
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="BorderBrush" Value="Gray"></Setter>
+            <Setter Property="Margin" Value="0,3,0,0"></Setter>
+        </Style>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:UserControlUC Tag="{Binding Tag, ElementName=ImageSearchUC}"></uc:UserControlUC>
+            <!--<materialDesign:PackIcon Kind="FileImage" Height="30" Width="30" VerticalAlignment="Center" Margin="8 0 0 0"/>-->
+        </Grid>
+        <Grid Grid.Row="1" Margin="15,15,0,0">
+            <TextBlock Text="画像検索" FontSize="30"></TextBlock>
+        </Grid>
+        <Grid Grid.Row="2" Margin="15,15,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Style="{StaticResource ResourceKey=BorderGrid}" Width="auto">
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                        <ColumnDefinition Width="35*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Grid.Column="0" x:Name="SelectPrints" ItemsSource="{Binding Combox,Mode=TwoWay}" SelectedItem="{Binding SelectedPrints,Mode=TwoWay}" Style="{StaticResource ResourceKey=MaterialDesignComboBox}" FontSize="19" Margin="9 0 0 0" Height="36">
+                        <!--<ComboBoxItem>物件賃貸契約書</ComboBoxItem>-->
+                    </ComboBox>
+                    <TextBox Grid.Column="1" Text="{Binding Search, Mode=TwoWay}" FontSize="21"></TextBox>
+                    <Button Grid.Column="2" Command="{Binding SearchButton}" Content="検索" Margin="0 0 3 0" Background="#FE8181"></Button>
+                </Grid>
+            </Border>
+
+            <TextBox x:Name="txbSearchNo" Grid.Row="1" Text="{Binding SearchNo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5" materialDesign:HintAssist.Hint="物件番号" Style="{StaticResource MaterialDesignFloatingHintTextBox}" IsReadOnly="True"/>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:Card Grid.Row="0" Margin="5" VerticalAlignment="Stretch">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Height="445">
+                        <ListBox Margin="20"
+                                 ItemsSource="{Binding List, Mode=OneWay}"
+                                 SelectedItem="{Binding SelectedItem}"
+                                 SelectionMode="Single"
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             />
+                    </ScrollViewer>
+                </materialDesign:Card>
+                <materialDesign:Card Grid.Column="1" Margin="5" VerticalAlignment="Stretch">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Height="350">
+                        <ItemsControl x:Name="listImage" ItemsSource="{Binding ImageView,Mode=TwoWay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <DataTemplate.Resources>
+                                        <Style TargetType="Image" x:Key="zoomImage1">
+                                            <Setter Property="Height" Value="160"/>
+                                            <Setter Property="Width" Value="160"/>
+                                        </Style>
+                                        <Style TargetType="Image" x:Key="zoomImage">
+                                            <Setter Property="Height" Value="360"/>
+                                            <Setter Property="Width" Value="360"/>
+                                        </Style>
+                                    </DataTemplate.Resources>
+                                    <StackPanel>
+                                        <CheckBox Name="chk1"/>
+                                        <Popup x:Name="popupImage" PopupAnimation="Slide" IsOpen="{Binding IsChecked, ElementName=chk1}">
+                                            <Border Background="White">
+                                                <Image Style="{StaticResource zoomImage}" Source="{Binding ImagePath}"></Image>
+                                            </Border>
+                                        </Popup>
+                                        <!--<Image Source="{Binding ImagePath}"></Image>-->
+                                        <Image x:Name="zoomImage1" Style="{StaticResource zoomImage1}" Source="{Binding ImagePath}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </materialDesign:Card>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

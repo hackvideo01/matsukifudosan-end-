@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6b74ea19db944dadbd5c500b1e697fdb" Name="Diagram1" ZoomLevel="96">
+        <EntityTypeShape EntityType="matsukiModel.ApartmentDB" Width="1.5" PointX="0.75" PointY="12.25" />
+        <EntityTypeShape EntityType="matsukiModel.ConstructionDB" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="matsukiModel.ContractDetailsDB" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="matsukiModel.CustomerDB" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="matsukiModel.DailyReportDB" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="matsukiModel.DetachedDB" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="matsukiModel.ImageDB" Width="1.5" PointX="3" PointY="2.875" />
+        <EntityTypeShape EntityType="matsukiModel.LandDB" Width="1.5" PointX="0.75" PointY="20" />
+        <EntityTypeShape EntityType="matsukiModel.NotPaymentDB" Width="1.5" PointX="7.75" PointY="5.75" />
+        <EntityTypeShape EntityType="matsukiModel.RentalContactDB" Width="1.5" PointX="7.75" PointY="8.75" />
+        <EntityTypeShape EntityType="matsukiModel.RentalManagementDB" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="matsukiModel.RentalPaymentDB" Width="1.5" PointX="9.75" PointY="9.75" />
+        <EntityTypeShape EntityType="matsukiModel.sysdiagrams" Width="1.5" PointX="11.75" PointY="0.75" />
+        <AssociationConnector Association="matsukiModel.FK_ImageDB_ApartmentDB" />
+        <AssociationConnector Association="matsukiModel.FK_ImageDB_DetachedDB" />
+        <AssociationConnector Association="matsukiModel.FK_ImageDB_LandDB" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

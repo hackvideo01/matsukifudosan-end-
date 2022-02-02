@@ -1,0 +1,288 @@
+﻿<UserControl x:Class="matsukifudousan.UserControlMain"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:matsukifudousan"
+             mc:Ignorable="d" 
+             xmlns:uc="clr-namespace:matsukifudousan.UserControlNL"
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             
+             d:DesignHeight="650" d:DesignWidth="1100"
+             Tag="マツキ不動産管理"
+             Name="mainWindown">
+    <UserControl.Resources>
+        <Style x:Key="btnmain" TargetType="{x:Type Button}" >
+            <Setter Property="Height" Value="90"></Setter>
+            <Setter Property="Width" Value="230"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                            <ContentPresenter  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Blue"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <uc:UserControlUC Tag="{Binding Tag, ElementName=mainWindown}"></uc:UserControlUC>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.Background>
+                <ImageBrush ImageSource="images/bk.jpg"/>
+            </Grid.Background>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"></RowDefinition>
+                <RowDefinition Height="530"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Grid.ColumnSpan="2" Margin="0 15 0 0">
+                <materialDesign:Card Height="100" Width="1000"
+                materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                    <materialDesign:Card.Background>
+                        <ImageBrush ImageSource="images/top.JPG"/>
+                    </materialDesign:Card.Background>
+                </materialDesign:Card>
+            </Grid>
+            <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0 30 0 0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="110"></RowDefinition>
+                    <RowDefinition Height="110"></RowDefinition>
+                    <RowDefinition Height="110"></RowDefinition>
+                    <RowDefinition Height="110"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition ></ColumnDefinition>
+                        <ColumnDefinition ></ColumnDefinition>
+                        <ColumnDefinition ></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Button 
+                        Grid.Column="0"    
+                        Style="{StaticResource ResourceKey=btnmain}"
+                        ToolTip="賃貸管理" 
+                        Click="RentalManagement_Click"
+                        x:Name="RentalManagement">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="images/document.png" HorizontalAlignment="Left" Margin="-84,0,0,0">
+                            </Image>
+                            <TextBlock Grid.Column="1" Text="賃貸管理" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,23,-56,23"></TextBlock>
+                        </Grid>
+                    </Button>
+
+                    <Button
+                        Click="DetachedHouse_Click"
+                        Style="{StaticResource btnmain}"
+                        Grid.Column="1"      
+                        ToolTip="戸建管理"
+                        >
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="images/document.png" Margin="-86,0,13,0">
+                            </Image>
+                            <TextBlock Grid.Column="1" Text="戸建管理" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,23,-57,23"></TextBlock>
+                        </Grid>
+                    </Button>
+
+                    <Button
+                        Click="Apartment_Click"
+                        Style="{StaticResource ResourceKey=btnmain}"
+                        Grid.Column="2"      
+                        ToolTip="マンション管理">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="images/document.png" HorizontalAlignment="Left" Margin="-87,0,0,0" Grid.ColumnSpan="2"/>
+                            <TextBlock Grid.Column="1" Text="マンション管理" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,23,-57,23" ></TextBlock>
+                        </Grid>
+                    </Button>
+
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Click=" Land_Click"
+                        Grid.Column="0"    
+                        Style="{StaticResource btnmain}"
+                        ToolTip="土地管理">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="images/document.png" Margin="-21,0,21,0">
+                            </Image>
+                            <TextBlock Grid.Column="1" Text="土地管理" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Button>
+
+                    <!--<Button
+                        Style="{StaticResource btnmain}"
+                        Grid.Column="1"      
+                        ToolTip="顧客管理">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="images/computer.png" Margin="-19,0,19,0">
+                            </Image>
+                            <TextBlock Grid.Column="1" Text="顧客管理" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Button>-->
+                    <Button
+                        Click="ImageSearch_Click"
+                        Grid.Column="1"    
+                        Style="{StaticResource btnmain}"
+                        ToolTip="画像検索">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="images/searchImage.png" Height="45" Margin="-19,0,19,0">
+                            </Image>
+                            <TextBlock Grid.Column="1" Text="画像検索" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Button>
+
+                    <Button
+                        Click="RentalContractPaymentSearch_Click"
+                        Style="{StaticResource btnmain}"
+                        Grid.Column="2"      
+                        ToolTip="入金管理">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="images/lookup.png" Height="45" Margin="-22,0,22,0">
+                            </Image>
+                            <TextBlock Grid.Column="1" Text="入金管理" VerticalAlignment="Center" Margin="0,10,0,11"/>
+                        </Grid>
+                    </Button>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Click="Customer_Click"
+                        Grid.Column="0"    
+                        Style="{StaticResource btnmain}"
+                        ToolTip="顧客管理">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="images/customer.png" Height="60" Margin="-30,0,18,0">
+                            </Image>
+                            <TextBlock Grid.Column="1" Text="顧客管理" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Button>
+                    <Button
+                        Click="DailyReport_Click"
+                        Grid.Column="1"    
+                        Style="{StaticResource btnmain}"
+                        ToolTip="日報">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="images/dailyReport.png" Height="60" Margin="-50,0,18,0">
+                            </Image>
+                            <TextBlock Grid.Column="1" Text="日報" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Button>
+                    <Button
+                        Click="Construction_Click"
+                        Grid.Column="2"    
+                        Style="{StaticResource btnmain}"
+                        ToolTip="工事台帳">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="images/construction.png" Margin="-18,0,18,0">
+                            </Image>
+                            <TextBlock Grid.Column="1" Text="工事台帳" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Button>
+
+                </Grid>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Click="CompanyDetails_Click"
+                        Grid.Column="0"    
+                        Style="{StaticResource btnmain}"
+                        ToolTip="会社情報">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="images/computer.png" Margin="-15,0,18,0">
+                            </Image>
+                            <TextBlock Grid.Column="1" Text="会社情報" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Button>
+
+                </Grid>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>

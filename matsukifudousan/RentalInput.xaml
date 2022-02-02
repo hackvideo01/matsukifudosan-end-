@@ -1,0 +1,608 @@
+﻿<UserControl x:Class="matsukifudousan.RentalInput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:matsukifudousan"
+             xmlns:validation="clr-namespace:matsukifudousan.ViewModel"
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             
+             DataContext="{StaticResource RentalInputVM}"
+
+             Name="ImageVM"
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="835">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" x:Key="Textblock">
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="Margin" Value="10,0,0,0"></Setter>
+        </Style>
+
+        <Style TargetType="Border" x:Key="BorderTr1">
+            <Setter Property="BorderThickness" Value="0,0,1,0"></Setter>
+            <Setter Property="BorderBrush" Value="Gray"></Setter>
+            <Setter Property="Background" Value="#F7F7F7"></Setter>
+        </Style>
+
+        <Style TargetType="Border" x:Key="BorderTr2">
+            <Setter Property="BorderThickness" Value="0,0,1,0"></Setter>
+            <Setter Property="BorderBrush" Value="Gray"></Setter>
+            <Setter Property="Background" Value="#FCF7F1"></Setter>
+        </Style>
+
+        <Style TargetType="Border" x:Key="BorderTr3">
+            <Setter Property="BorderThickness" Value="0,0,1,0"></Setter>
+            <Setter Property="BorderBrush" Value="Gray"></Setter>
+            <Setter Property="Background" Value="#F9FDEF"></Setter>
+        </Style>
+
+        <Style TargetType="Border" x:Key="BorderGrid">
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="BorderBrush" Value="Gray"></Setter>
+            <Setter Property="Margin" Value="0,3,0,0"></Setter>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="TextBoxMargin">
+            <Setter Property="Margin" Value="0 3 0 0"/>
+            <Setter Property="FontSize" Value="19"/>
+        </Style>
+
+        <ControlTemplate x:Key="ExclamationOnError">
+            <Grid>
+                <!-- FontSize を元のテキストボックスから取得するために名前をつけて Binding -->
+                <AdornedElementPlaceholder x:Name="TextBox"/>
+                <TextBlock Text="! " HorizontalAlignment="Right" Foreground="Red"
+                       FontSize="{Binding ElementName=TextBox, Path=AdornedElement.FontSize}"/>
+            </Grid>
+        </ControlTemplate>
+
+        <!-- Validation がエラーを返した際にその内容をツールチップを表示するスタイル -->
+        <Style x:Key="TextBoxHasError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                    Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                    Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="White" PreviewKeyDown="Grid_PreviewKeyDown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="15,15,0,0">
+            <TextBlock Text="賃貸物件新規登録" FontSize="30"></TextBlock>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition Height="42"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr1}">
+                            <TextBlock Text="物件番号（必須）" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <!--<TextBox x:Name="txbHouseNo" Text="{Binding HouseNo, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="物件番号" FontSize="19" Margin="0 3 0 0" PreviewTextInput="txbHouseNo_PreviewTextInput" SpellCheck.IsEnabled="True"/>-->
+                            <TextBox x:Name="txbHouseNo" materialDesign:HintAssist.Hint="物件番号" FontSize="19" Margin="0 0 0 0" PreviewTextInput="txbHouseNo_PreviewTextInput" 
+                             SpellCheck.IsEnabled="True"
+                             InputMethod.IsInputMethodEnabled="False"
+                             Validation.ErrorTemplate="{StaticResource ExclamationOnError}"
+                             Style="{StaticResource TextBoxHasError}" KeyUp="txbHouseNo_KeyUp" LostFocus="txbHouseNo_LostFocus">
+                                <TextBox.Text>
+                                    <Binding Path="HouseNo" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validation:NumberValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="1" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr1}">
+                            <TextBlock Text="物件名" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <TextBox x:Name="txbHouseName" Text="{Binding HouseName,Mode=TwoWay}" materialDesign:HintAssist.Hint="物件名" FontSize="19" Margin="0 3 0 0"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="2" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr1}">
+                            <TextBlock Text="所在地" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20*"></ColumnDefinition>
+                                <ColumnDefinition Width="80*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" x:Name="txbHousePost" Text="{Binding HousePost,Mode=TwoWay}" materialDesign:HintAssist.Hint="郵便局番号" FontSize="19" Margin="0 3 0 0" LostFocus="txbHousePost_LostFocus" />
+                            <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="Black">
+                                <TextBox x:Name="txbHouseAddress" Text="{Binding HouseAddress}" materialDesign:HintAssist.Hint="所在地" FontSize="19" Margin="0 3 0 0" />
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="3" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr1}">
+                            <TextBlock Text="最寄り駅" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <TextBox Text="{Binding NearestSation}" materialDesign:HintAssist.Hint="最寄り駅" FontSize="19" Margin="0 3 0 0" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="4" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr1}">
+                            <TextBlock Text="種類/構造" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20*"></ColumnDefinition>
+                                <ColumnDefinition Width="80*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding HouseType}" Grid.Column="0" materialDesign:HintAssist.Hint="種類" FontSize="19" Margin="0 3 0 0" />
+                            <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="Black">
+                                <TextBox Text="{Binding Construction}" materialDesign:HintAssist.Hint="構造" FontSize="19" Margin="0 3 0 0" />
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="5" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr1}">
+                            <TextBlock Text="築年/間取り/総面積" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding YearConstruction}" Grid.Column="0" materialDesign:HintAssist.Hint="築年" FontSize="19" Margin="0 3 0 0" />
+                            <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="Black">
+                                <TextBox Text="{Binding Decorate}" materialDesign:HintAssist.Hint="間取り" FontSize="19" Margin="0 3 0 0" />
+                            </Border>
+                            <Border Grid.Column="2" BorderThickness="1,0,0,0" BorderBrush="Black">
+                                <TextBox Text="{Binding TotalArea}" materialDesign:HintAssist.Hint="総面積" FontSize="19" Margin="0 3 0 0" />
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="6" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr1}">
+                            <TextBlock Text="駐車場/ペット" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding Parking}" Grid.Column="0" materialDesign:HintAssist.Hint="駐車場" FontSize="19" Margin="0 3 0 0" />
+                            <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="Black">
+                                <TextBox Text="{Binding Pets}" materialDesign:HintAssist.Hint="ペット" FontSize="19" Margin="0 3 0 0" />
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="7" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr1}">
+                            <TextBlock Text="その他設備" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <TextBox Text="{Binding OtherEquipment}" materialDesign:HintAssist.Hint="その他設備" FontSize="19" Margin="0 3 0 0" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="8" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr1}">
+                            <TextBlock Text="備考" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <TextBox Text="{Binding HouseRemarks}" materialDesign:HintAssist.Hint="備考" FontSize="19" Margin="0 3 0 0" TextWrapping="Wrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="9" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr2}">
+                            <TextBlock Text="敷金/礼金" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" x:Name="txbSecurityDeposit" Text="{Binding SecurityDeposit}" materialDesign:HintAssist.Hint="敷金" FontSize="19" Margin="0 3 0 0" InputMethod.IsInputMethodEnabled="False" SpellCheck.IsEnabled="False" PreviewTextInput="txbSecurityDeposit_PreviewTextInput"/>
+                            <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="Black">
+                                <TextBox x:Name="txbKeyMoney" Text="{Binding KeyMoney}" materialDesign:HintAssist.Hint="礼金" FontSize="19" Margin="0 3 0 0" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="txbKeyMoney_PreviewTextInput"/>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="10" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr2}">
+                            <TextBlock Text="共益費/管理費" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" x:Name="txbCommonFee" Text="{Binding CommonFee}" materialDesign:HintAssist.Hint="共益費" FontSize="19" Margin="0 3 0 0" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="txbCommonFee_PreviewTextInput"/>
+                            <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="Black">
+                                <TextBox x:Name="txbManagementFee" Text="{Binding ManagementFee}" materialDesign:HintAssist.Hint="管理費" FontSize="19" Margin="0 3 0 0" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="txbManagementFee_PreviewTextInput"/>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="11" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr2}">
+                            <TextBlock Text="家賃/駐車料" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" x:Name="txbRent" Text="{Binding Rent}" materialDesign:HintAssist.Hint="家賃" FontSize="19" Margin="0 3 0 0" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="txbRent_PreviewTextInput"/>
+                            <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="Black">
+                                <TextBox x:Name="txbParkingFee" Text="{Binding ParkingFee}" materialDesign:HintAssist.Hint="駐車料" FontSize="19" Margin="0 3 0 0" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="txbParkingFee_PreviewTextInput"/>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="12" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr2}">
+                            <TextBlock Text="CATV　費（月額）" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <TextBox x:Name="txbCATVFee" Text="{Binding CATVFee}" materialDesign:HintAssist.Hint="CATV　費（月額）" FontSize="19" Margin="0 3 0 0" PreviewTextInput="txbCATVFee_PreviewTextInput" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="13" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr2}">
+                            <TextBlock Text="その他諸費用" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <TextBox x:Name="txbOtherFee" Text="{Binding OtherFee}" materialDesign:HintAssist.Hint="その他諸費用" FontSize="19" Margin="0 3 0 0" PreviewTextInput="txbOtherFee_PreviewTextInput" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!--<Border Grid.Row="14" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr3}">
+                            <TextBlock Text="管理会社名" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <TextBox Text="{Binding MNGMTCOName}" materialDesign:HintAssist.Hint="管理会社名" FontSize="19" Margin="0 3 0 0" />
+                        </Grid>
+                    </Grid>
+                </Border>-->
+
+                <Border Grid.Row="14" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr3}">
+                            <TextBlock Text="管理会社名" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1" x:Name="SelectMNGMTCO">
+                            <!--<TextBox Text="{Binding MNGMTCOName}" materialDesign:HintAssist.Hint="管理会社名" FontSize="19" Margin="0 3 0 0" />-->
+                            <!--<ComboBox Grid.Column="2" x:Name="SelectMNGMTCOName" ItemsSource="{Binding ComboxMNGMTCOName,Mode=TwoWay}" SelectedItem="{Binding SelectedMNGMTCOName,Mode=TwoWay}" Style="{StaticResource ResourceKey=MaterialDesignComboBox}" FontSize="19" Margin="9 0 0 0" Height="36">
+                                <ComboBoxItem>物件賃貸契約書</ComboBoxItem>
+                            </ComboBox>-->
+                            <TextBox Grid.Column="1" Name="textBoxCONAME" Text="{Binding SelectedMNGMTCOName}" KeyUp="textBox_KeyUp" materialDesign:HintAssist.Hint="管理会社名" FontSize="19" Margin="0 3 0 0" LostFocus="textBoxCONAME_LostFocus"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Popup x:Name="autoListPopup"    
+                               Visibility="Collapsed"                    
+                               Height="100"    
+                               StaysOpen="False"
+                               AllowsTransparency ="True"
+                               Placement="Bottom"
+                               PlacementTarget="{Binding ElementName=textBoxCONAME}">
+
+                    <Border Width="298" Height="150" BorderBrush="Black" BorderThickness="1">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Background="Black">
+                            <StackPanel Name="resultStack"></StackPanel>
+                        </ScrollViewer>
+                    </Border>
+                </Popup>
+
+                <Border Grid.Row="15" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr3}">
+                            <TextBlock Text="会社住所" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <TextBox Text="{Binding CompanyAddress}" x:Name="CompanyAddress" materialDesign:HintAssist.Hint="会社住所" FontSize="19" Margin="0 3 0 0" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="16" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr3}">
+                            <TextBlock Text="TEL/FAX" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Text="{Binding COPhone}" x:Name="COPhone" materialDesign:HintAssist.Hint="TEL" FontSize="19" Margin="0 3 0 0" />
+                            <TextBox Grid.Column="1" Text="{Binding COFax}" x:Name="COFax" materialDesign:HintAssist.Hint="FAX" FontSize="19" Margin="0 3 0 0" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="17" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr3}">
+                            <TextBlock Text="名前" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <TextBox Text="{Binding Name}" materialDesign:HintAssist.Hint="名前" FontSize="19" Margin="0 3 0 0" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="18" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr3}">
+                            <TextBlock Text="住所" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <TextBox Text="{Binding Address}" materialDesign:HintAssist.Hint="住所" FontSize="19" Margin="0 3 0 0" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="19" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr3}">
+                            <TextBlock Text="TEL/FAX" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                                <ColumnDefinition Width="50*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Text="{Binding Phone}" materialDesign:HintAssist.Hint="TEL" FontSize="19" Margin="0 3 0 0" />
+                            <TextBox Grid.Column="1" Text="{Binding Fax}" materialDesign:HintAssist.Hint="FAX" FontSize="19" Margin="0 3 0 0" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="20" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr3}">
+                            <TextBlock Text="管理形態" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <TextBox Text="{Binding MNGMTForm}" materialDesign:HintAssist.Hint="管理形態" FontSize="19" Margin="0 3 0 0" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="21" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr3}">
+                            <TextBlock Text="備考" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <TextBox Text="{Binding Remarks}" materialDesign:HintAssist.Hint="備考" FontSize="19" Margin="0 3 0 0" TextWrapping="Wrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="22" Style="{StaticResource ResourceKey=BorderGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"></ColumnDefinition>
+                            <ColumnDefinition Width="75*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ResourceKey=BorderTr2}">
+                            <TextBlock Text="写真アップロード" Style="{StaticResource ResourceKey=Textblock}"></TextBlock>
+                        </Border>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80*"></ColumnDefinition>
+                                <ColumnDefinition Width="20*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox IsReadOnly="True" x:Name="imagetb" Grid.Column="0" Text="{Binding ImagePath,Mode=TwoWay}"></TextBox>
+                            <TextBox x:Name="tbPath" Text="{Binding ImageFullPath}" Visibility="Hidden"></TextBox>
+                            <Button Grid.Column="1" Command="{Binding AddImageCommand}" Content="アップロード" Margin="0 0 5 0"></Button>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <ScrollViewer Grid.Row="23" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                    <ItemsControl x:Name="listImage" ItemsSource="{Binding NameIMG}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DataTemplate.Resources>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Height" Value="100"/>
+                                    </Style>
+                                </DataTemplate.Resources>
+                                <StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <Button Grid.Row="24" Command="{Binding AddRentalCommand}" Content="登録" Width="150" Height="42" Background="#333333"></Button>
+
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+
+</UserControl>

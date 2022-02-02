@@ -1,0 +1,52 @@
+﻿<Window x:Class="matsukifudousan.CompanyDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:matsukifudousan"
+        xmlns:uc="clr-namespace:matsukifudousan.UserControlNL"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        
+        Title="マツキ不動産詳細情報" Height="380" Width="350">
+    <Window.Background>
+        <ImageBrush ImageSource="/images/company.jpg" Stretch="Fill" />
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:UserControlUC Tag="{Binding Title, ElementName=ContractVM}"></uc:UserControlUC>
+            <materialDesign:PackIcon Kind="HomeOutline" Height="30" Width="30" VerticalAlignment="Center" Margin="8 0 0 0"/>
+        </Grid>
+        <Grid Grid.Row="1" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition Height="75"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" FontSize="20" TextDecorations="None" Foreground="Black">免許番号：静岡県知事（9）第5557号</TextBlock>
+            <TextBlock Grid.Row="1" FontSize="20" TextDecorations="None" Foreground="Black">所　在地：静岡県三島市大場148-2</TextBlock>
+            <TextBlock Grid.Row="2" FontSize="20" TextDecorations="None" Foreground="Black">商　　号：有限会社マツキ不動産</TextBlock>
+            <TextBlock Grid.Row="3" FontSize="20" TextDecorations="None" Foreground="Black">代　　表：代表取締役松波敏男 印</TextBlock>
+            <TextBlock Grid.Row="4" FontSize="20" TextDecorations="None" Foreground="Black">取引士登録番号：静岡　第6198号</TextBlock>
+            <TextBlock Grid.Row="5" FontSize="20" TextDecorations="None" Foreground="Black">取引士氏名：松　波　敏　男　　印</TextBlock>
+            <TextBlock Grid.Row="6" FontSize="20" TextDecorations="None" Foreground="Black">取引士登録番号：静岡第11803号</TextBlock>
+            <TextBlock Grid.Row="7" FontSize="20" TextDecorations="None" Foreground="Black">取引士氏名：松波芳枝　　印</TextBlock>
+            <!--<TextBlock Grid.Row="8" FontSize="25" VerticalAlignment="Bottom" HorizontalAlignment="Center" TextDecorations="Underline" Foreground="Black">マツキ不動産</TextBlock>-->
+            <Image Grid.Row="8" Source="/images/logo.png"></Image>
+        </Grid>
+    </Grid>
+</Window>

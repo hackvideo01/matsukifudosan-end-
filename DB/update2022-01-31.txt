@@ -1,0 +1,5 @@
+use matsuki
+go
+
+ALTER TABLE DailyReportDB ADD TypeSelect nvarchar(30);
+go

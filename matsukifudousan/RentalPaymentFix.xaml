@@ -1,0 +1,152 @@
+﻿<Window x:Class="matsukifudousan.RentalPaymentFix"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:matsukifudousan"
+             xmlns:uc="clr-namespace:matsukifudousan.UserControlNL"
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             
+             DataContext="{StaticResource RentalPaymentFixVM}"
+             WindowStartupLocation="CenterScreen"
+             ResizeMode="NoResize"
+             WindowStyle="None" 
+             x:Name="RentalPaymentWD"
+             mc:Ignorable="d" 
+             Title="入金選択" Height="500" Width="350">
+    <Window.Resources>
+
+        <Style TargetType="Border" x:Key="BorderGrid">
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="BorderBrush" Value="Gray"></Setter>
+            <Setter Property="Margin" Value="0,3,0,0"></Setter>
+        </Style>
+
+        <Style TargetType="DatePicker" x:Key="DatePickerMF">
+            <Setter Property="Margin" Value="9 3 0 0"/>
+            <Setter Property="FontSize" Value="19"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:UserControlUC Tag="{Binding Title, ElementName=RentalPaymentWD}"></uc:UserControlUC>
+            <!--<materialDesign:PackIcon Kind="AccountBoxOutline" Height="30" Width="30" VerticalAlignment="Center" Margin="8 0 0 0"/>-->
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="月："></TextBlock>
+            <TextBlock Grid.Column="1" Text="{Binding Months}"></TextBlock>
+        </Grid>
+        <Grid Grid.Row="2" Margin="15,15,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="80"></RowDefinition>
+            </Grid.RowDefinitions>
+            <materialDesign:Card Grid.Row="0" Margin="1" VerticalAlignment="Stretch">
+
+                <DataGrid Name="dataGrid" ItemsSource="{Binding ComboxPrintsChoose,Mode=TwoWay}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}" ColumnHeaderHeight="40" AutoGenerateColumns="False" CanUserSortColumns="False" CanUserAddRows="False" Height="350" Validation.ErrorTemplate="{x:Null}">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <!-- ヘッダーの罫線を黒にする -->
+                            <Setter Property="BorderThickness" Value="0,1,1,1"/>
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Background" Value="LightSeaGreen"/>
+                            <Setter Property="Foreground" Value="White"/>
+
+                            <!-- ヘッダー文字をセンタリングする -->
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="月">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding MonthNumber}" TextAlignment="Center" FontSize="18"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness"
+                                Value="0,0,1,1" />
+                                    <Setter Property="BorderBrush"
+                                Value="Black" />
+                                </Style>
+                            </DataGridTemplateColumn.CellStyle>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="金額">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Money}" TextAlignment="Center" FontSize="18"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness"
+                                Value="0,0,1,1" />
+                                    <Setter Property="BorderBrush"
+                                Value="Black" />
+                                </Style>
+                            </DataGridTemplateColumn.CellStyle>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="日付"
+                        IsReadOnly="True"
+                        FontSize="18"
+                        Binding="{Binding Date}">
+
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="BorderThickness"
+                                Value="0,0,1,1"  />
+                                    <Setter Property="BorderBrush"
+                                Value="Black" />
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Height="350">
+                        <ListView x:Name="RentalList" ItemsSource="{Binding List, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="物件番号" DisplayMemberBinding="{Binding HouseNo}"></GridViewColumn>
+                                    <GridViewColumn Header="物件名" DisplayMemberBinding="{Binding HouseName}"></GridViewColumn>
+                                    <GridViewColumn Header="住所地" DisplayMemberBinding="{Binding HouseAddress}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                </ScrollViewer>-->
+            </materialDesign:Card>
+            <Grid Grid.Row="2">
+                <Button Grid.Row="2" Content="決定" Command="{Binding RentalPaymentFixSelect}" Width="100" Background="OrangeRed"></Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
